@@ -1,0 +1,9 @@
+/.idea
+/venv
+/data
+
+/backend/static
+/backend/media
+
+.env
+backend/db.sqlite3
