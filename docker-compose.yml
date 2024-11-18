@@ -15,6 +15,7 @@ services:
       context: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./backend/static:/var/www/staticfiles
       - ./backend/media:/var/www/media
@@ -31,8 +32,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./backend/static:/static
-      - ./backend/media:/media
+      - ./backend/static:/app/static
+      - ./backend/media:/app/media
     depends_on:
       - db
 
@@ -43,8 +44,5 @@ services:
       - webroot:/var/www/certbot
 
 volumes:
-  data:
-  static:
-  media:
   letsencrypt:
   webroot:
