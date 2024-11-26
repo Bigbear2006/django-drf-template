@@ -1,7 +1,10 @@
 FROM python:alpine
 
-COPY . app
 WORKDIR app
 
-RUN pip install -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+COPY . .
+
 ENTRYPOINT ["sh", "entrypoint.sh"]
