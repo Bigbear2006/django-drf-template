@@ -1,18 +1,29 @@
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from drf_yasg.views import get_schema_view
+from drf_yasg.generators import OpenAPISchemaGenerator
 from drf_yasg.openapi import Info
 
-view = get_schema_view(Info("API", "v1", "API description"), public=True)
+
+class CustomSchemaGenerator(OpenAPISchemaGenerator):
+    def get_schema(self, request=None, public=False):
+        schema = super().get_schema(request, public)
+        schema.schemes = ["https"] if request.is_secure() else ["http"]
+        return schema
+
+
+schema_view = get_schema_view(
+    Info("API", "v1", "API description"),
+    authentication_classes=[JWTAuthentication],
+    permission_classes=[AllowAny],
+    public=True
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("api.urls")),
     path('api/auth/', include("jwt_auth.urls")),
-    path('api/docs/', view.with_ui("swagger")),
+    path('api/docs/', schema_view.with_ui("swagger")),
 ]
-
-if not settings.DOCKER:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
