@@ -116,6 +116,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'jwt_auth.User'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -123,6 +125,7 @@ LOGGING = {
         'simple': {
             'format': '[{asctime}] {message}',
             'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
         },
     },
     'handlers': {
@@ -134,7 +137,7 @@ LOGGING = {
     'loggers': {
         'queries': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
     },
 }

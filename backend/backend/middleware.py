@@ -18,5 +18,5 @@ class QueriesLoggingMiddleware:
             f'ran {len(connection.queries)} queries',
         )
         for query in connection.queries:
-            logger.info(f'({query["time"]}) {query["sql"]}')
+            logger.debug(f'({query["time"]}) {query["sql"]}')
         return response
