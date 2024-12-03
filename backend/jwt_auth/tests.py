@@ -16,7 +16,11 @@ class JWTAuthTestCase(TestCase):
     def get_user_info(self, access_token=None) -> Response:
         rsp = self.client.get(
             reverse('user-info'),
-            headers=None if access_token is None else {'Authorization': f'Bearer {access_token}'}
+            headers=(
+                None
+                if access_token is None
+                else {'Authorization': f'Bearer {access_token}'}
+            ),
         )
         return rsp
 
@@ -24,30 +28,32 @@ class JWTAuthTestCase(TestCase):
         # register
         rsp = self.client.post(
             reverse('register-user'),
-            self.user_data
+            self.user_data,
         )
         self.assertEqual(rsp.status_code, 201)
 
         # login
         rsp = self.client.post(
             reverse('user-login'),
-            self.user_data
+            self.user_data,
         )
         self.assertEqual(rsp.status_code, 200)
         access = rsp.data['access']
         refresh = rsp.data['refresh']
 
-        # get user info
         rsp = self.get_user_info(access)
         self.assertEqual(rsp.status_code, 200)
         self.assertNotIn('password', rsp.data)
         self.assertNotEqual(self.user_data['is_staff'], rsp.data['is_staff'])
-        self.assertNotEqual(self.user_data['date_joined'], rsp.data['date_joined'])
+        self.assertNotEqual(
+            self.user_data['date_joined'],
+            rsp.data['date_joined'],
+        )
 
         # refresh access token
         rsp = self.client.post(
             reverse('refresh-token'),
-            {'refresh': refresh}
+            {'refresh': refresh},
         )
         self.assertEqual(rsp.status_code, 200)
 

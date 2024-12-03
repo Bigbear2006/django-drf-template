@@ -10,20 +10,21 @@ from drf_yasg.openapi import Info
 class CustomSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
         schema = super().get_schema(request, public)
-        schema.schemes = ["https"] if request.is_secure() else ["http"]
+        schema.schemes = ['https'] if request.is_secure() else ['http']
         return schema
 
 
 schema_view = get_schema_view(
-    Info("API", "v1", "API description"),
+    Info('API', 'v1', 'API description'),
     authentication_classes=[JWTAuthentication],
+    generator_class=CustomSchemaGenerator,
     permission_classes=[AllowAny],
-    public=True
+    public=True,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include("api.urls")),
-    path('api/auth/', include("jwt_auth.urls")),
-    path('api/docs/', schema_view.with_ui("swagger")),
+    path('api/', include('api.urls')),
+    path('api/auth/', include('jwt_auth.urls')),
+    path('api/docs/', schema_view.with_ui('swagger')),
 ]

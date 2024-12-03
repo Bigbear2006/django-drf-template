@@ -1,12 +1,17 @@
 from rest_framework.serializers import ModelSerializer
-
-from .models import User
+from jwt_auth.models import User
 
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        exclude = ('is_active', 'is_superuser', 'last_login', 'groups', 'user_permissions')
+        exclude = (
+            'is_active',
+            'is_superuser',
+            'last_login',
+            'groups',
+            'user_permissions',
+        )
         extra_kwargs = {
             'password': {'write_only': True},
             'is_staff': {'read_only': True},
@@ -18,5 +23,5 @@ class UserSerializer(ModelSerializer):
             validated_data.pop('username', None),
             validated_data.pop('email', None),
             validated_data.pop('password', None),
-            **validated_data
+            **validated_data,
         )

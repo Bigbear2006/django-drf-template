@@ -2,8 +2,8 @@ FROM python:alpine
 
 WORKDIR app
 
-COPY requirements.txt requirements.txt
-RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY requirements/prod.txt requirements/prod.txt
+RUN pip install --upgrade pip && pip install -r requirements/prod.txt
 
 COPY . .
 

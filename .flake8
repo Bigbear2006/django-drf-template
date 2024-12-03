@@ -1,0 +1,10 @@
+[flake8]
+exclude = .git, __pycache__, venv, __init__.py, */migrations
+
+import-order-style = google
+
+application-import-names = backend
+
+inline-quotes = '
+
+ignore = I100, I101, W503, F811

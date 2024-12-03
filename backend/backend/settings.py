@@ -26,12 +26,12 @@ INSTALLED_APPS = [
     # my apps
     'api',
     'jwt_auth',
-    # third part apps
+    # third party apps
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
     'django_cleanup',
-    "drf_yasg"
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -43,6 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'backend.middleware.QueriesLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -73,21 +74,25 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': 'db',
         'PORT': 5432,
-    }
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -111,6 +116,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'jwt_auth.User'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '[{asctime}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'queries': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}
+
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:5173',
@@ -128,11 +156,14 @@ SIMPLE_JWT = {
 }
 
 SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'OPERATIONS_SORTER': 'method',
+    'TAGS_SORTER': 'alpha',
     'SECURITY_DEFINITIONS': {
-      'Bearer': {
-          'type': 'apiKey',
-          'name': 'Authorization',
-          'in': 'header'
-      }
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        },
     },
 }
