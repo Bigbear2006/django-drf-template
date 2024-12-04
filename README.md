@@ -14,13 +14,18 @@
 `git clone https://github.com/Bigbear2006/django-drf-template.git`
 
 ## Generate Django SECRET_KEY
+```shell
+python -m venv myenv
+venv\Scripts\activate
+pip install -r .\backend\requirements\dev.txt
+django-admin shell
+```
+
 ```python
 from django.core.management.utils import get_random_secret_key
 print('django-insecure-' + get_random_secret_key())
+exit()
 ```
-Or  
-`python -c 'from django.core.management.utils import get_random_secret_key; 
-print('django-insecure-' + get_random_secret_key())'`
 
 ## Create .env file
 ```

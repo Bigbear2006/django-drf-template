@@ -1,7 +1,8 @@
 from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
-from drf_yasg.utils import swagger_auto_schema
+
 from jwt_auth.models import User
 from jwt_auth.serializers import UserSerializer
 

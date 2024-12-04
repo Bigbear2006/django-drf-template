@@ -1,6 +1,6 @@
+from datetime import timedelta
 import os
 from pathlib import Path
-from datetime import timedelta
 
 from dotenv import load_dotenv
 
@@ -162,6 +162,7 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
     'OPERATIONS_SORTER': 'method',
     'TAGS_SORTER': 'alpha',
+    'DEFAULT_MODEL_RENDERING': 'example',
     'SECURITY_DEFINITIONS': {
         'Bearer': {
             'type': 'apiKey',

@@ -1,7 +1,7 @@
 import logging
 
-from django.db import connection
 from django.core.handlers.wsgi import WSGIRequest
+from django.db import connection
 from rest_framework.response import Response
 
 logger = logging.getLogger('queries')

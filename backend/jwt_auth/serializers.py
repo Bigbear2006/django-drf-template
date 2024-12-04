@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer
+
 from jwt_auth.models import User
 
 

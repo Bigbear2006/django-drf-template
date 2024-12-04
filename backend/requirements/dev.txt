@@ -9,3 +9,5 @@ flake8-import-order==0.18.2
 flake8-quotes==3.3.2
 pep8-naming==0.13.3
 black==24.10.0
+isort==5.13.2
+pre_commit==4.0.1
