@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  flake8:
+  pre-commit:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,24 +23,5 @@ jobs:
           pip install --upgrade pip
           pip install -r backend/requirements/dev.txt
 
-      - name: Run flake8
-        run: flake8 backend
-
-  black:
-    needs: flake8
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
-
-      - name: Install black
-        run: pip install black
-
-      - name: Run black
-        run: black --check backend
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files
