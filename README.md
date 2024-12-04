@@ -15,7 +15,7 @@
 
 ## Generate Django SECRET_KEY
 ```shell
-python -m venv myenv
+python -m venv venv
 venv\Scripts\activate
 pip install -r .\backend\requirements\dev.txt
 django-admin shell
